@@ -23,6 +23,21 @@
 //   return arr[n];
 // }
 
+//Memoize function
+function memoize(fn){
+const cache = {};
+  // not sure how many arguments will be supplied
+  return function(...args){
+    if(cache[args]){
+      return cache[args];
+    }
+
+    const result = fn.apply(this, args);
+    cache[args] = result;
+    return result;
+  };
+}
+
 // Recursive solution
 function fib(n){
   if(n<2){
@@ -30,5 +45,7 @@ function fib(n){
   }
   return fib(n-1) + fib(n-2);
 }
+
+fib = memoize(fib);
 
 module.exports = fib;
