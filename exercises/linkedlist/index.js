@@ -92,7 +92,64 @@ class LinkedList {
     return null;
   }
   removeAt(index){
-    
+    // My solution
+    // if(index>=this.size()){
+    //   return null;
+    // } else if(index===0){
+    //   if(length===1){
+    //     this.head = null;
+    //   } else {
+    //     this.head = this.head.next;
+    //   }
+    // } else {
+    //   let previous = this.getAt(index-1);
+    //   previous.next = this.getAt(index).next;
+    // }
+    // Instructor solution
+    if(!this.head){
+      return;
+    }
+    if(index==0){
+      this.head = this.head.next;
+      return;
+    }
+    const previous = this.getAt(index-1);
+    if(!previous || !previous.next) {
+      return null;
+    }
+    previous.next = previous.next.next;
+  }
+  insertAt(data, index){
+    if(!this.head){
+      this.head = new Node(data);
+      return;
+    }
+    if(index===0){
+      this.head = new Node(data, this.getAt(index));
+      return;
+    } else if(index>this.size()){
+      this.insertLast(data);
+    } else {
+      let previous = this.getAt(index-1);
+      previous.next = new Node(data,previous.next);
+    }
+  }
+  forEach(fn){
+    let node = this.head;
+    let counter = 0;
+    while(node){
+      fn(node,counter);
+      node = node.next;
+      counter++;
+    }
+  }
+  //generator function
+  *[Symbol.iterator](){
+    let node = this.head;
+    while(node){
+      yield node;
+      node = node.next;
+    }
   }
 }
 
