@@ -11,6 +11,23 @@
 // 4       5
 // Answer: [1, 3, 2]
 
-function levelWidth(root) {}
+function levelWidth(root) {
+  // s represents stopper to signify we've hit end of row
+  let arr = [root,"s"];
+  let widths = [0];
+
+  while(arr.length>1){
+    const node = arr.shift();
+    if(node === "s"){
+      widths.push(0);
+      arr.push('s');
+    } else {
+      arr.push(... node.children);
+      //represents the current level of the tree
+      widths[widths.length-1]++;
+    }
+    return widths;
+  }
+}
 
 module.exports = levelWidth;
